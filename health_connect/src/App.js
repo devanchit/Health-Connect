@@ -10,24 +10,24 @@ import Signup from './pages/SignUp';
 import SignupPage from './pages/SignUp';
 import { UserContextProvider } from './UserContext';
 import Navbar from './components/Nav';
+import { Chat } from './pages/Chat';
 
 
 function App() {
   return (
     <UserContextProvider>
-    <BrowserRouter>
-    <Navbar/>
-    <main>
-      <Routes>
-        <Route path="/"  element = {<Signin/>} />
-        <Route path="/signin"  element = {<Signin/>} />
-        <Route path="/signup"  element = {<SignupPage/>} />
-      </Routes>
-    </main>
-    
-    </BrowserRouter>
+      <BrowserRouter>
+        <Navbar />
+        <main>
+          <Routes>
+            <Route path="/" element={<Signin />} />
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/chat" element={<Chat room="room1" />} />
+          </Routes>
+        </main>
+      </BrowserRouter>
     </UserContextProvider>
-    
   );
 }
 
