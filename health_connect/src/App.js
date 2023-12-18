@@ -11,6 +11,7 @@ import SignupPage from './pages/SignUp';
 import { UserContextProvider } from './UserContext';
 import Navbar from './components/Nav';
 import { Chat } from './pages/Chat';
+import Admin from './pages/Admin';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/chat" element={<Chat room="room1" />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </main>
       </BrowserRouter>
