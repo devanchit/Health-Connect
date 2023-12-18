@@ -20,6 +20,7 @@ import {
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../UserContext";
+import { NavLink } from "react-router-dom";
 
 
 
@@ -87,6 +88,7 @@ export default function Navbar() {
               {username && (
                 <>
                 <button>Logout ({username})</button>
+                <button> <NavLink to = "/admin">Admin</NavLink> </button>
                 </>
               )}
               <Button
