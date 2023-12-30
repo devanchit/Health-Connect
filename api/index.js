@@ -129,9 +129,10 @@ app.post("/signup", async (req, res) => {
     
  });
 
- app.get('/api/doctors', async (req, res) => {
+ app.get('/doctors', async (req, res) => {
   try {
     const doctors = await Doctor.find({}, '-password'); // Exclude the password field
+    console.log(doctors)
     res.json(doctors);
   } catch (error) {
     console.error(error);

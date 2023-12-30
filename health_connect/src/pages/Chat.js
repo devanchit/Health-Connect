@@ -56,7 +56,7 @@ export const Chat = ({ room }) => {
       text: newMessage,
       createdAt: serverTimestamp(),
       user: userInfo.username,
-      room: "room1",
+      room: room,
     });
 
      setNewMessage("");
@@ -64,7 +64,7 @@ export const Chat = ({ room }) => {
 
   return (
     <Box>
-      <Flex h="75vh" w="99%" direction="column" overflowX="scroll" p="3" >
+      <Flex h="69vh" w="99%" direction="column" overflowX="scroll" p="3" >
         {messages.map((message) => {
           if (message.user == userInfo.username) {
             return (
