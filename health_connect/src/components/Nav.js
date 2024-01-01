@@ -20,7 +20,7 @@ import {
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../UserContext";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 
 
@@ -49,26 +49,38 @@ import { NavLink } from "react-router-dom";
 export default function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
 
   const {setUserInfo,userInfo} = useContext(UserContext);
   //const [username, setUsername] = useState('');
   useEffect(() => {
     fetch('http://localhost:4000/profile', {
       credentials: 'include',
-    }).then(response => {
-      response.json().then(userInfo => {
+    })
+      .then(response => response.json())
+      .then(userInfo => {
+        console.log('Received userInfo:', userInfo);
         setUserInfo(userInfo);
+      })
+      .catch(error => {
+        console.error('Error fetching profile:', error);
       });
-    });
   }, []);
 
   function logout() {
     fetch('http://localhost:4000/logout', {
       credentials: 'include',
       method: 'POST',
-    });
-    setUserInfo(null);
+    })
+      .then(() => {
+        console.log('Logout successful');
+        setUserInfo(null);
+      })
+      .catch(error => {
+        console.error('Error during logout:', error);
+      });
 
+      navigate("/signin");
   }
 
   const username = userInfo?.username;
@@ -87,7 +99,7 @@ export default function Navbar() {
               </Button>
               {username && (
                 <>
-                <button>Logout ({username})</button>
+                <button onClick={logout}>Logout ({username})</button>
                 <button> <NavLink to = "/admin">Admin</NavLink> </button>
                 </>
               )}

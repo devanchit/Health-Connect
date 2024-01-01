@@ -51,26 +51,34 @@ app.post("/signup", async (req, res) => {
 
   app.post('/signin', async (req,res) => {
     const {username,password} = req.body;
-    const userDoc = await User.findOne({username});
-    if(userDoc){
-      const passOk = bcrypt.compareSync(password, userDoc.password);
-      if (passOk) {
-        // logged in
-        jwt.sign({username,id:userDoc._id,role:userDoc.role}, secret, {}, (err,token) => {
-          if (err) throw err;
-          res.cookie('token', token).json({
-            id:userDoc._id,
-            username,
-            role: userDoc.role,
+    try{
+      const userDoc = await User.findOne({username});
+      if(userDoc){
+        const passOk = bcrypt.compareSync(password, userDoc.password);
+        console.log("login..........  "+passOk);
+        if (passOk) {
+          // logged in
+          jwt.sign({username,id:userDoc._id,role:userDoc.role}, secret, {}, (err,token) => {
+            if (err) throw err;
+            res.cookie('token', token).json({
+              id:userDoc._id,
+              username,
+              role: userDoc.role,
+            });
           });
-        });
-      } else {
-        res.status(400).json('wrong credentials');
+        } else {
+          res.status(400).json('wrong credentials');
+        }
       }
+      else {
+        res.status(400).json('user not found');
+      }
+    }catch (error) {
+      console.error('Error during findOne:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
-    else {
-      res.status(400).json('user not found');
-    }
+
+    
   });
 
 
@@ -88,8 +96,21 @@ app.post("/signup", async (req, res) => {
     });
   });
 
+  app.get('/patients', async (req, res) => {
+    try {
+      const patients = await User.find({}, '-password'); // Exclude the password field
+      //console.log(patients)
+      res.json(patients);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
   app.post('/logout', (req,res) => {
-    res.cookie('token', '').json('ok');
+    console.log("logout Done.........")
+    res.status(200).cookie('token', '').json({ message: 'Logout successful' });
+
   });
 
   // doctorName: "",
@@ -138,6 +159,34 @@ app.post("/signup", async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+app.post('/doctorsignin', async(req, res) => {
+  const { username, password } = req.body;
+  console.log(username + "  " + password);
+  try{
+    const user = await Doctor.findOne({doctorName:username});;
+  console.log(user);
+  if(user){
+    const passOk = bcrypt.compareSync(password, user.password);
+    // User found, respond with user data
+    jwt.sign({username,id:user._id,role:user.role}, secret, {}, (err,token) => {
+      if (err) throw err;
+      res.cookie('token', token).json({
+        id:user._id,
+        username,
+        role: user.role,
+      });
+    });
+  } else {
+    // User not found, respond with an error
+    res.status(401).json({ error: 'Invalid credentials' });
+  }
+  }catch (error) {
+    console.error('Error during findOne:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+  
 });
 
 

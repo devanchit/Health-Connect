@@ -17,6 +17,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Chat } from "./Chat";
+import { Link, NavLink } from "react-router-dom";
 
 const Home = () => {
   const [doctors, setDoctors] = useState([]);
@@ -110,6 +111,17 @@ const Home = () => {
         <>
             <Button onClick={resetRoomname} m="5px" bg={"gray.700"} color={"white"}  fontSize={"sm"}
                 fontWeight={600} > Back </Button>
+              
+              <Button as={"a"}
+                display={{ base: "none", md: "inline-flex" }}
+                fontSize={"sm"}
+                fontWeight={600}
+                color={"white"}
+                bg={"gray.700"}
+                href={"/reportupload"}
+                _hover={{
+                  bg: "gray.550",
+                }} > Share reports   </Button>
             <Chat room = {roomname}/>
                
         </>

@@ -26,6 +26,7 @@ import { useContext, useState } from 'react';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
 import { UnlockIcon } from '@chakra-ui/icons';
 import { UserContext } from '../UserContext';
+import { useNavigate } from 'react-router-dom';
   
   
 export default function Signin(){ 
@@ -34,6 +35,7 @@ export default function Signin(){
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const {setUserInfo} = useContext(UserContext);
+  const navigate = useNavigate();
 
 
   const toast  = useToast();
@@ -63,18 +65,24 @@ export default function Signin(){
 
   async function login(ev) {
     ev.preventDefault();
-    const response = await fetch('http://localhost:4000/signin', {
-      method: 'POST',
-      body: JSON.stringify({username, password}),
-      headers: {'Content-Type':'application/json'},
-      credentials: 'include',
-    });
-    if (response.ok) {
-      response.json().then(userInfo => {
+    try {
+      const response = await fetch('http://localhost:4000/signin', {
+        method: 'POST',
+        body: JSON.stringify({ username, password }),
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+      });
+  
+      if (response.ok) {
+        const userInfo = await response.json();
         setUserInfo(userInfo);
         showToastSuccess();
-      });
-    } else {
+        navigate("/home");
+      } else {
+        showToastFailure();
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
       showToastFailure();
     }
   }
@@ -137,7 +145,7 @@ export default function Signin(){
               </Button>
             </HStack>
             <Stack spacing="6">
-              <Button onClick={login}>Sign in</Button>
+              <Button onClick={(ev) => login(ev)}>Sign in</Button>
               <HStack>
                 <Divider />
                 <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
