@@ -52,27 +52,27 @@ app.post("/signup", async (req, res) => {
   app.post('/signin', async (req,res) => {
     const {username,password} = req.body;
     try{
-      const userDoc = await User.findOne({username});
-      if(userDoc){
-        const passOk = bcrypt.compareSync(password, userDoc.password);
-        console.log("login..........  "+passOk);
-        if (passOk) {
-          // logged in
-          jwt.sign({username,id:userDoc._id,role:userDoc.role}, secret, {}, (err,token) => {
-            if (err) throw err;
-            res.cookie('token', token).json({
-              id:userDoc._id,
-              username,
-              role: userDoc.role,
-            });
+        const userDoc = await User.findOne({username});
+    if(userDoc){
+      const passOk = bcrypt.compareSync(password, userDoc.password);
+      console.log("login..........  "+passOk);
+      if (passOk) {
+        // logged in
+        jwt.sign({username,id:userDoc._id,role:userDoc.role}, secret, {}, (err,token) => {
+          if (err) throw err;
+          res.cookie('token', token).json({
+            id:userDoc._id,
+            username,
+            role: userDoc.role,
           });
-        } else {
-          res.status(400).json('wrong credentials');
-        }
+        });
+      } else {
+        res.status(400).json('wrong credentials');
       }
-      else {
-        res.status(400).json('user not found');
-      }
+    }
+    else {
+      res.status(400).json('user not found');
+    }
     }catch (error) {
       console.error('Error during findOne:', error);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -161,12 +161,23 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+app.get('/doctorsList', async (req, res) => {
+  try {
+    const doctors = await Doctor.find({}, 'doctorName name'); // Select only the username and name fields
+    
+    res.json(doctors);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.post('/doctorsignin', async(req, res) => {
   const { username, password } = req.body;
   console.log(username + "  " + password);
-  try{
-    const user = await Doctor.findOne({doctorName:username});;
-  console.log(user);
+  // Check if the username and password are valid (you may want to hash passwords in a real app)
+  const user = await Doctor.findOne({doctorName:username});;
+  
   if(user){
     const passOk = bcrypt.compareSync(password, user.password);
     // User found, respond with user data
@@ -182,11 +193,6 @@ app.post('/doctorsignin', async(req, res) => {
     // User not found, respond with an error
     res.status(401).json({ error: 'Invalid credentials' });
   }
-  }catch (error) {
-    console.error('Error during findOne:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-  
 });
 
 

@@ -16,7 +16,7 @@ import {
   Tag,
   Text,
 } from "@chakra-ui/react";
-import { Chat } from "./Chat";
+import { Chat } from "../components/Chat";
 import { Link, NavLink } from "react-router-dom";
 
 const Home = () => {
@@ -99,8 +99,8 @@ const Home = () => {
                     colorScheme="blue"
                     onClick={() => handleChatClick(doctor.doctorName)}
                   >
-                    {" "}
-                    Chat{" "}
+                    
+                    Chat
                   </Button>
                 </Center>
               </Box>
@@ -118,7 +118,7 @@ const Home = () => {
                 fontWeight={600}
                 color={"white"}
                 bg={"gray.700"}
-                href={"/reportupload"}
+                href={"/reportshare"}
                 _hover={{
                   bg: "gray.550",
                 }} > Share reports   </Button>
