@@ -11,12 +11,13 @@ import Signup from './pages/SignUp';
 import SignupPage from './pages/SignUp';
 import { UserContextProvider } from './UserContext';
 import Navbar from './components/Nav';
-import { Chat } from './pages/Chat';
+import { Chat } from './components/Chat';
 import Admin from './pages/Admin';
 import Home from './pages/Home';
 import ReportShare from './pages/ReportShare';
 import PatientCard from './pages/DoctorHome';
 import DoctorLoginPage from './pages/DoctorLogin';
+import { UploadedReport } from './pages/UploadedReport';
 //import RootLayout from './RootLayout';
 
 
@@ -55,6 +56,7 @@ function App() {
                   <Route path="/reportshare" element={<ReportShare />} />
                   <Route path="/doctorHome" element={<PatientCard />} />
                   <Route path="/doctorlogin" element={<DoctorLoginPage />} />
+                  <Route path="/uploadedreports" element={<UploadedReport />} />
                 </Routes>
               </main>
             </BrowserRouter>
