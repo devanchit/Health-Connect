@@ -142,7 +142,7 @@ export default function Navbar() {
                 >
                   <Avatar
                     size={"sm"}
-                    src={"https://avatars.dicebear.com/api/male/username.svg"}
+                    src={"https://api.dicebear.com/9.x/pixel-art/svg?seed=John"}
                   />
                 </MenuButton>
                 <MenuList alignItems={"center"}>
@@ -150,16 +150,19 @@ export default function Navbar() {
                   <Center>
                     <Avatar
                       size={"2xl"}
-                      src={"https://avatars.dicebear.com/api/male/username.svg"}
+                      src={"https://api.dicebear.com/9.x/pixel-art/svg?seed=John"}
                     />
                   </Center>
                   <br />
                   <Center>
-                    <p>Username</p>
+                  {username && (
+                <>
+                <p>({username})</p>
+                </>
+              )}
                   </Center>
                   <br />
                   <MenuDivider />
-                  <MenuItem>Your Servers</MenuItem>
                   <MenuItem>Account Settings</MenuItem>
                   <MenuItem onClick={logout}>Logout</MenuItem>
                 </MenuList>
