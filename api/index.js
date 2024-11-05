@@ -14,9 +14,10 @@ const Doctor = require('./models/Doctor');
 app.use(cors({credentials:true,origin:'http://localhost:3000'}));
 app.use(express.json());
 app.use(cookieParser());
-
-mongoose.connect("mongodb+srv://devanshchitransh:KBiNQfcRCuWNfoPe@cluster0.1oy6pik.mongodb.net/?retryWrites=true&w=majority");
-
+require('dotenv').config();
+mongoose.connect(process.env.MONGODB_URI)
+      .then(() => console.log('Connected to MongoDB'))
+      .catch(err => console.error('MongoDB connection error:', err));
 
 
 app.post("/signup", async (req, res) => {
@@ -53,6 +54,7 @@ app.post("/signup", async (req, res) => {
     const {username,password} = req.body;
     try{
         const userDoc = await User.findOne({username});
+        console.log(userDoc);
     if(userDoc){
       const passOk = bcrypt.compareSync(password, userDoc.password);
       console.log("login..........  "+passOk);

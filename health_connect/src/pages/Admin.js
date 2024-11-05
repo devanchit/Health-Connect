@@ -197,7 +197,7 @@ export default function Admin() {
         </>
       )}
 
-      {username != "admin" && <>Admin banja bhadwe Pehle</>}
+      {username != "admin" && <>You are not an Admin User.</>}
     </>
   );
 }
