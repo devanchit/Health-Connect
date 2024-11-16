@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+.DoctorModel{
+  min-height: 350px;
+}
+
+.navbar {
+  position: fixed;
+  width: 100%;
+}
+
+/* .doctors-container{
+  margin-top: 60px;
+} */
+
+.add-doctors{
+  margin-top: 120px;
+}

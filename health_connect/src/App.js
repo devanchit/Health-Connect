@@ -18,6 +18,7 @@ import ReportShare from './pages/ReportShare';
 import PatientCard from './pages/DoctorHome';
 import DoctorLoginPage from './pages/DoctorLogin';
 import { UploadedReport } from './pages/UploadedReport';
+import AdminPage from './pages/AdminPage';
 //import RootLayout from './RootLayout';
 
 
@@ -45,13 +46,14 @@ function App() {
 
             <BrowserRouter>
               <Navbar />
-              <main>
+              <main style={{ paddingTop: "80px" }}>
                 <Routes>
                   <Route path="/" element={<Signin />} />
                   <Route path="/signin" element={<Signin />} />
                   <Route path="/signup" element={<SignupPage />} />
                   {/* <Route path="/chat" element={<Chat room="room1" />} /> */}
-                  <Route path="/admin" element={<Admin />} />
+                  <Route path="/admin" element={<AdminPage />} />
+                  <Route path="/adminpage" element={<AdminPage />} />
                   <Route path="/home" element={<Home />} />
                   <Route path="/reportshare" element={<ReportShare />} />
                   <Route path="/doctorHome" element={<PatientCard />} />
