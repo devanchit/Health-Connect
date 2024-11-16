@@ -68,6 +68,7 @@ const Home = () => {
             //   <strong>{doctor.doctorName}</strong> - {doctor.specialty}
             // </li>
             <>
+              <div className="doctors-container">
               <Box m="4px" minW={400} minH={500}>
                 <Image
                   src="https://images.unsplash.com/photo-1667420170858-39d40cb413e3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
@@ -93,7 +94,10 @@ const Home = () => {
                   Username : {doctor.doctorName}
                 </Heading>
                 <Divider my="2" />
+                <div className="DoctorModel">
+
                 <Text minH={100}>{doctor.professionalBio}</Text>
+                </div>
                 <Center my="6">
                   <Button
                     colorScheme="blue"
@@ -104,6 +108,7 @@ const Home = () => {
                   </Button>
                 </Center>
               </Box>
+              </div>
             </>
           ))}
         </Grid>
@@ -127,6 +132,7 @@ const Home = () => {
         </>
         
       )}
+     
     </>
   );
 };

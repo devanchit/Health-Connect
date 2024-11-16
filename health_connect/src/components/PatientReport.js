@@ -4,12 +4,11 @@ import { storage } from "../firebase-config";
 import { Box, Button, Divider, Grid } from "@chakra-ui/react";
 import { UserContext } from "../UserContext";
 
-
 export const PatientReport = ({ reportuser }) => {
   const [files, setFiles] = useState([]);
   const { userInfo, setUserInfo } = useContext(UserContext);
 
-  const filesRef = ref(storage,`report/${reportuser}/${userInfo.username}`);
+  const filesRef = ref(storage, `report/${reportuser}/${userInfo.username}`);
 
   useEffect(() => {
     const fetchFiles = async () => {
@@ -30,7 +29,6 @@ export const PatientReport = ({ reportuser }) => {
 
     fetchFiles();
   }, []);
-  
 
   const handleButtonClick = (url) => {
     window.open(url, "_blank");
@@ -53,14 +51,9 @@ export const PatientReport = ({ reportuser }) => {
           mt="10px"
           minW="450px"
         >
-            <a href={file.url} target="_blank" rel="noopener noreferrer">
-          <Button
-            
-          >
-            Click here to view
-          </Button>
-          <Divider my="2" />
-
+          <a href={file.url} target="_blank" rel="noopener noreferrer">
+            <Button>Click here to view</Button>
+            <Divider my="2" />
           </a>
           <p>Report Name : {file.name}</p>
         </Box>

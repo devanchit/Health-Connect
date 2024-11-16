@@ -112,13 +112,16 @@ export default function Admin() {
 
   return (
     <>
+    <div className="admin">
       {username == "admin" && (
         <>
+        <div className="doctors-container">
           <Box
             bg={"#808a63"}
             px={4}
             width="70%"
-            mt="50px"
+            mt="250px"
+            pt="200px"
             position={"center"}
             ml="15%"
             alignItems={"center"}
@@ -140,11 +143,13 @@ export default function Admin() {
               />
             </ButtonGroup>
           </Box>
+          </div>
           {doctors.map((doctor) => (
             // <li key={doctor._id}>
             //   <strong>{doctor.doctorName}</strong> - {doctor.specialty}
             // </li>
             <>
+            <div className="doctors-containers">
               <Card
                 direction={{ base: "column", sm: "row" }}
                 overflow="hidden"
@@ -192,12 +197,16 @@ export default function Admin() {
                   </CardFooter>
                 </Stack>
               </Card>
+              </div>
             </>
           ))}
+          
         </>
       )}
 
       {username != "admin" && <>You are not an Admin User.</>}
+
+      </div>
     </>
   );
 }
