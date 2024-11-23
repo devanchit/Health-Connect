@@ -51,7 +51,7 @@ const Home = () => {
   }, [userInfo]);
 
   const handleChatClick = (doctorName) => {
-      setRoomname(doctorName + userInfo.username);
+    setRoomname(doctorName + userInfo.username);
     console.log(roomname);
   };
   const resetRoomname = () => {
@@ -69,70 +69,83 @@ const Home = () => {
             // </li>
             <>
               <div className="doctors-container">
-              <Box m="4px" minW={400} minH={500}>
-                <Image
-                  src="https://images.unsplash.com/photo-1667420170858-39d40cb413e3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-                  alt="Svartifoss Waterfall"
-                  borderRadius="xl"
-                  objectFit="cover"
-                  mx="auto"
-                />
-                <HStack mt="5" spacing="3">
-                  <Tag variant="outline">
-                    Languages: {doctor.consultingLanguages.join(", ")}
-                  </Tag>
+                <Box m="4px" minW={400} minH={500}>
+                  <Image
+                    src="https://images.unsplash.com/photo-1667420170858-39d40cb413e3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+                    alt="Svartifoss Waterfall"
+                    borderRadius="xl"
+                    objectFit="cover"
+                    mx="auto"
+                  />
+                  <HStack mt="5" spacing="3">
+                    <Tag variant="outline">
+                      Languages: {doctor.consultingLanguages.join(", ")}
+                    </Tag>
 
-                  <Tag variant="outline">
-                    Qualification: {doctor.qualification}
-                  </Tag>
-                </HStack>
-                <Divider my="2" />
-                <Heading my="4" size="sm">
-                  Name : {doctor.name}
-                </Heading>
-                <Heading my="4" size="sm">
-                  Username : {doctor.doctorName}
-                </Heading>
-                <Divider my="2" />
-                <div className="DoctorModel">
-
-                <Text minH={100}>{doctor.professionalBio}</Text>
-                </div>
-                <Center my="6">
-                  <Button
-                    colorScheme="blue"
-                    onClick={() => handleChatClick(doctor.doctorName)}
-                  >
-                    
-                    Chat
-                  </Button>
-                </Center>
-              </Box>
+                    <Tag variant="outline">
+                      Qualification: {doctor.qualification}
+                    </Tag>
+                  </HStack>
+                  <Divider my="2" />
+                  <Heading my="4" size="sm">
+                    Name : {doctor.name}
+                  </Heading>
+                  <Heading my="4" size="sm">
+                    Username : {doctor.doctorName}
+                  </Heading>
+                  <Divider my="2" />
+                  <div className="DoctorModel">
+                    <Text minH={100}>{doctor.professionalBio}</Text>
+                  </div>
+                  <Center my="6">
+                    <Box
+                      as="button"
+                      bg="blue.500"
+                      color="white"
+                      px="4"
+        py="2"
+                      onClick={() => handleChatClick(doctor.doctorName)}
+                    >
+                      Chat
+                    </Box>
+                  </Center>
+                </Box>
               </div>
             </>
           ))}
         </Grid>
       ) : (
         <>
-            <Button onClick={resetRoomname} m="5px" bg={"gray.700"} color={"white"}  fontSize={"sm"}
-                fontWeight={600} > Back </Button>
-              
-              <Button as={"a"}
-                display={{ base: "none", md: "inline-flex" }}
-                fontSize={"sm"}
-                fontWeight={600}
-                color={"white"}
-                bg={"gray.700"}
-                href={"/reportshare"}
-                _hover={{
-                  bg: "gray.550",
-                }} > Share reports   </Button>
-            <Chat room = {roomname}/>
-               
+          <Button
+            onClick={resetRoomname}
+            m="5px"
+            bg={"gray.700"}
+            color={"white"}
+            fontSize={"sm"}
+            fontWeight={600}
+          >
+            {" "}
+            Back{" "}
+          </Button>
+
+          <Button
+            as={"a"}
+            display={{ base: "none", md: "inline-flex" }}
+            fontSize={"sm"}
+            fontWeight={600}
+            color={"white"}
+            bg={"gray.700"}
+            href={"/reportshare"}
+            _hover={{
+              bg: "gray.550",
+            }}
+          >
+            {" "}
+            Share reports{" "}
+          </Button>
+          <Chat room={roomname} />
         </>
-        
       )}
-     
     </>
   );
 };

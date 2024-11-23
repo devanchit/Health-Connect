@@ -21,7 +21,7 @@ const doctorSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    default: "user",
+    default: "doctor",
   },
   qualification: {
     type: String,

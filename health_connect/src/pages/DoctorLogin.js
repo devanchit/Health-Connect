@@ -14,34 +14,66 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import { UserContext } from "../UserContext";
+import { UnlockIcon } from "@chakra-ui/icons";
 
 const DoctorLoginPage = () => {
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const {setUserInfo} = useContext(UserContext);
+  const { userInfo, setUserInfo } = useContext(UserContext);
   const navigate = useNavigate();
+
+  const toast  = useToast();
+  const showToastSuccess = () => {
+    console.log("showToastSuccess called");
+    toast({
+      title: "Successfull",
+      description: "Successfully Logged in.",
+      duration: 5000,
+      isClosable: true,
+      status: 'success',
+      position: 'top',
+      icon: <UnlockIcon />,
+    });
+  };
+  
+
+  const showToastFailure = () =>{
+    toast({
+      title: "Failed",
+      description: "Wrong Credentials.",
+      duration: 5000,
+      isClosable: true,
+      status: 'error',
+      position: 'top',   // default is bottom
+      icon: <UnlockIcon/>
+    })
+  }
+
+
   const handleLogin = async () => {
+    // e.preventDefault();
     try {
       const response = await fetch("http://localhost:4000/doctorsignin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        method: 'POST',
         body: JSON.stringify({ username, password }),
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
       });
 
       if (response.ok) {
         const userInfo = await response.json();
+        showToastSuccess();
         setUserInfo(userInfo);
         // console.log("Login successful. User info:", userInfo);
-        
-        // Perform any actions you need upon successful login
         navigate("/doctorHome");
       } else {
+        showToastFailure();
         console.error("Login failed. Invalid credentials.");
-        // Handle login failure, show an error message, etc.
+        
       }
     } catch (error) {
       console.error("Error during login:", error);
@@ -50,7 +82,7 @@ const DoctorLoginPage = () => {
   };
 
   return (
-    <ChakraProvider>
+    
       <Box
         minH="100vh"
         display="flex"
@@ -97,7 +129,7 @@ const DoctorLoginPage = () => {
           </Text>
         </Stack>
       </Box>
-    </ChakraProvider>
+    
   );
 };
 

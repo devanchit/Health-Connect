@@ -16,39 +16,37 @@ import {
   Stack,
   useColorMode,
   Center,
+  useToast,
 } from "@chakra-ui/react";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { MoonIcon, SunIcon, UnlockIcon } from "@chakra-ui/icons";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../UserContext";
 import { NavLink, useNavigate } from "react-router-dom";
 
-// const NavLink: React.FC<Props> = ({ children }) => {
-//   return (
-//     <Box
-//       as="a"
-//       px={2}
-//       py={1}
-//       rounded={"md"}
-//       _hover={{
-//         textDecoration: "none",
-//         bg: useColorModeValue("gray.200", "gray.700"),
-//       }}
-//       href={"#"}
-//     >
-//       {children}
-//     </Box>
-//   );
-// };
 
 export default function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
 
+  const toast  = useToast();
+    const showLogoutSuccess = () =>{
+    toast({
+      title: "Successfull",
+      description: "Successfully Logged out.",
+      duration: 5000,
+      isClosable: true,
+      status: 'success',
+      position: 'top',   // default is bottom
+      icon: <UnlockIcon/>
+    })
+  }
+
   const { setUserInfo, userInfo } = useContext(UserContext);
   //const [username, setUsername] = useState('');
   useEffect(() => {
     fetch("http://localhost:4000/profile", {
+      method: 'GET',
       credentials: "include",
     })
       .then((response) => response.json())
@@ -68,6 +66,7 @@ export default function Navbar() {
     })
       .then(() => {
         console.log("Logout successful");
+        showLogoutSuccess();
         setUserInfo(null);
       })
       .catch((error) => {

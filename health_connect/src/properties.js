@@ -75,7 +75,7 @@ export const options = [
 
 ]
 
-export const reports_types = [
+export const languages = [
   {
     value: "Hindi",
     label: "Hindi",

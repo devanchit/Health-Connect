@@ -12,11 +12,15 @@ import {
   FormLabel,
   FormControl,
   Stack,
-  FormHelperText
+  FormHelperText,
+  useToast
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Select } from "chakra-react-select";
-import { options } from "../properties";
+import { options,languages as languageOptions } from "../properties";
+import { UnlockIcon } from "@chakra-ui/icons";
+import { MdSave } from "react-icons/md";
+import { FaTimesCircle } from "react-icons/fa";
 
 function MyFormModal({ isOpen, onClose }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -36,7 +40,32 @@ function MyFormModal({ isOpen, onClose }) {
     experienceInIndustry: 0,
   });
 
-  
+  const toast  = useToast();
+  const showToastSuccess = () => {
+    console.log("showToastSuccess called");
+    toast({
+      title: "Successfull",
+      description: "Doctor Info. Saved Successfully.",
+      duration: 5000,
+      isClosable: true,
+      status: 'success',
+      position: 'top',
+      icon: <MdSave />,
+    });
+    onClose();
+  };
+
+  const showToastFailure = () =>{
+    toast({
+      title: "Failed",
+      description: "Doctor Info. Not Saved Successfully.",
+      duration: 5000,
+      isClosable: true,
+      status: 'error',
+      position: 'top',   // default is bottom
+      icon: <FaTimesCircle/>
+    })
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -87,9 +116,11 @@ function MyFormModal({ isOpen, onClose }) {
 
       if (response.ok) {
         console.log('Doctor information saved successfully.');
+        showToastSuccess();
         // Optionally, reset the form or perform other actions
       } else {
         console.error('Failed to save doctor information.');
+        showToastFailure();
       }
     } catch (error) {
       console.error('Error submitting the form:', error);
@@ -234,7 +265,7 @@ function MyFormModal({ isOpen, onClose }) {
                 <FormControl>
                   <FormLabel>Consulting Languages</FormLabel>
                   <Select
-                    options={options}
+                    options={languageOptions}
                     value={languages}
                     onChange={handleselect}
                     isMulti
