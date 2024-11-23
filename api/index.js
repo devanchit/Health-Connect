@@ -84,19 +84,38 @@ app.post("/signin", async (req, res) => {
   }
 });
 
-app.get("/profile", async (req, res) => {
-  const { token } = req.cookies;
-  const { username } = req.body;
+// app.get("/profile", async (req, res) => {
+//   const { token } = req.cookies;
+//   console.log(token)
+//   const { username, doctorName} = req.body;
+//   console.log(doctorName + "  yhi h...")
+//   if (!token) {
+//     return res.status(401).json({ error: "JWT must be provided" });
+//   }
+//   jwt.verify(token, secret, {}, (err, info) => {
+//     if (err) throw err;
+//     const { role } = token;
+//     res.json(info);
+//   });
+// });
 
+
+app.get("/profile", async (req, res) => {
+  console.log("Cookies received:", req.cookies);
+
+  const { token } = req.cookies; // Ensure cookie-parser is used
   if (!token) {
     return res.status(401).json({ error: "JWT must be provided" });
   }
   jwt.verify(token, secret, {}, (err, info) => {
-    if (err) throw err;
-    const { role } = token;
+    if (err) {
+      console.error("JWT verification failed:", err);
+      return res.status(403).json({ error: "Invalid token" });
+    }
     res.json(info);
   });
 });
+
 
 app.get("/patients", async (req, res) => {
   try {
@@ -114,18 +133,6 @@ app.post("/logout", (req, res) => {
   res.status(200).cookie("token", "").json({ message: "Logout successful" });
 });
 
-// doctorName: "",
-// firstname: "",
-// email: "",
-// name: "",
-// password: "",
-// qualification: "",
-// specialty: "",
-// photo: "",
-// specializedTreatments: [],
-// professionalBio: "",
-// consultingLanguages: [],
-// experienceInIndustry: 0,
 
 app.post("/addDoctors", async function (req, res) {
   // console.log(req.body);
@@ -139,6 +146,7 @@ app.post("/addDoctors", async function (req, res) {
     const userDoc = await Doctor.create({
       ...req.body,
       password: bcrypt.hashSync(Password, salt),
+      username: doctorName,
     });
     res.json(userDoc);
   } catch (e) {
@@ -150,7 +158,7 @@ app.post("/addDoctors", async function (req, res) {
 app.get("/doctors", async (req, res) => {
   try {
     const doctors = await Doctor.find({}, "-password"); // Exclude the password field
-    console.log(doctors);
+    //console.log(doctors);
     res.json(doctors);
   } catch (error) {
     console.error(error);
@@ -169,32 +177,73 @@ app.get("/doctorsList", async (req, res) => {
   }
 });
 
+// app.post("/doctorsignin", async (req, res) => {
+//   const { username, password } = req.body;
+//   console.log("username : " + username + "password: " + "  " + password);
+//   // Check if the username and password are valid (you may want to hash passwords in a real app)
+//   const user = await Doctor.findOne({ doctorName: username });
+
+//   if (user) {
+//     const passOk = bcrypt.compareSync(password, user.password);
+//     // User found, respond with user data
+//     jwt.sign(
+//       { username, id: user._id, role: user.role },
+//       secret,
+//       {},
+//       (err, token) => {
+//         if (err) throw err;
+//         res.cookie("token", token).json({
+//           id: user._id,
+//           username,
+//           role: user.role,
+//         });
+//       }
+//     );
+//   } else {
+//     // User not found, respond with an error
+//     res.status(401).json({ error: "Invalid credentials" });
+//   }
+// });
+
+
 app.post("/doctorsignin", async (req, res) => {
   const { username, password } = req.body;
-  console.log(username + "  " + password);
-  // Check if the username and password are valid (you may want to hash passwords in a real app)
-  const user = await Doctor.findOne({ doctorName: username });
-
-  if (user) {
-    const passOk = bcrypt.compareSync(password, user.password);
-    // User found, respond with user data
-    jwt.sign(
-      { username, id: user._id, role: user.role },
-      secret,
-      {},
-      (err, token) => {
-        if (err) throw err;
-        res.cookie("token", token).json({
-          id: user._id,
-          username,
-          role: user.role,
-        });
+  // console.log("username : " + username + "    password: " + "  " + password);
+  try {
+    const userDoc = await Doctor.findOne({ doctorName: username });
+    console.log(userDoc);
+    if (userDoc) {
+      const passOk = bcrypt.compareSync(password, userDoc.password);
+      console.log("login..........  " + passOk);
+      if (passOk) {
+        // logged in
+        jwt.sign(
+          { username: userDoc.doctorName, id: userDoc._id, role: userDoc.role },
+          secret,
+          {},
+          (err, token) => {
+            if (err) throw err;
+            console.log("Generated token:", token); 
+            res.cookie("token", token).json({
+              id: userDoc._id,
+              username: userDoc.doctorName,
+              role: userDoc.role,
+            });
+            
+          }
+        );
+        console.log("doctor name->    "+userDoc.doctorName);
+      } else {
+        res.status(400).json("wrong credentials");
       }
-    );
-  } else {
-    // User not found, respond with an error
-    res.status(401).json({ error: "Invalid credentials" });
+    } else {
+      res.status(400).json("user not found");
+    }
+  } catch (error) {
+    console.error("Error during findOne:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
+  
 });
 
 app.listen(4000);

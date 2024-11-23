@@ -49,6 +49,8 @@ export default function AdminPage() {
 
   return (
     <>
+    {username == "admin" && (
+          <>
       <Box
         as="button"
         bg="blue.500"
@@ -64,8 +66,9 @@ export default function AdminPage() {
         _focus={{ boxShadow: "outline" }}
         onClick={handleOpenModal}
       >
-        Add Doctors
+        Add Doctor
       </Box>
+      </>)}
 
       <MyFormModal isOpen={isModalOpen} onClose={handleCloseModal} />
 

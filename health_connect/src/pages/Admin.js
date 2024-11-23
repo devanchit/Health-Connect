@@ -133,7 +133,7 @@ export default function Admin() {
               mt="10px"
               mb="10px"
             >
-              <Button onClick={handleOpenModal}>Add Doctors</Button>
+              <Button onClick={handleOpenModal}>Add Doctor</Button>
               {/* <MyModal isOpen={isModalOpen} onClose={handleCloseModal} /> */}
               <MyFormModal isOpen={isModalOpen} onClose={handleCloseModal} />
               <IconButton
