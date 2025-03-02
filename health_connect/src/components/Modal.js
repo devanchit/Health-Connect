@@ -21,10 +21,13 @@ import { options,languages as languageOptions } from "../properties";
 import { UnlockIcon } from "@chakra-ui/icons";
 import { MdSave } from "react-icons/md";
 import { FaTimesCircle } from "react-icons/fa";
+import { ref, uploadBytes } from "firebase/storage";
+import { storage } from "../firebase-config";
 
 function MyFormModal({ isOpen, onClose }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [languages, setLanguages] = useState("");
+  const [image, setImage] = useState("");
   const [formData, setFormData] = useState({
     doctorName: "",
     firstname: "",
@@ -76,6 +79,13 @@ function MyFormModal({ isOpen, onClose }) {
     }));
   };
 
+  const handleImage = (e) => {
+    const fileRef = ref(storage, `doctor/${formData.doctorName}/profilephoto`);
+    uploadBytes(fileRef, image).then(() => {
+      alert("photo uploaded");
+    });
+  };
+
   const handleArrayChange = (e, fieldName) => {
     const { value } = e.target;
     setFormData((prevData) => ({
@@ -101,6 +111,7 @@ function MyFormModal({ isOpen, onClose }) {
     const valueList = languages.map((language) => language.value);
     formData.consultingLanguages = valueList;
     console.log(formData);
+
     
     ev.preventDefault();
 
@@ -235,16 +246,16 @@ function MyFormModal({ isOpen, onClose }) {
                     name="specialty"
                     placeholder="Specialty"
                     value={formData.specialty}
-                    onChange={handleChange}
+                    onChange={handleImage}
                   />
                 </FormControl>
                 <FormControl>
                   <FormLabel>Photo URL</FormLabel>
                   <Input
-                    type="text"
+                    type="file"
                     name="photo"
-                    value={formData.photo}
-                    onChange={handleChange}
+                    value={image}
+                    onChange={handleImage}
                   />
                 </FormControl>
 

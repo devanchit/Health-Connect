@@ -17,11 +17,13 @@ import {
   useColorMode,
   Center,
   useToast,
+  Image,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon, UnlockIcon } from "@chakra-ui/icons";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../UserContext";
 import { NavLink, useNavigate } from "react-router-dom";
+import logo from "../logo.svg";
 
 
 export default function Navbar() {
@@ -80,10 +82,23 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="navbar">
-        <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+      <div className="navbar" zIndex="100" >
+        <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} position="fixed" top="0" width="100%" zIndex="100" >
           <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-            <Box>Logo</Box>
+            <Box>
+            <Image
+            src={logo}
+            alt="Logo"
+            borderRadius="xl"
+            objectFit="cover"
+            mx="auto"
+            boxSize="100px" // Sets both width and height to 100px
+            width="80px" // Custom width
+            height="50px"
+            zIndex="100" 
+          />
+
+            </Box>
 
             <Flex alignItems={"center"}>
               <Stack direction={"row"} spacing={7}>

@@ -62,7 +62,7 @@ const Home = () => {
   return (
     <>
       {!roomname ? (
-        <Grid templateColumns="repeat(3, 1fr)" gap={4}>
+        <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }}  gap={4}>
           {doctors.map((doctor) => (
             // <li key={doctor._id}>
             //   <strong>{doctor.doctorName}</strong> - {doctor.specialty}
@@ -86,14 +86,18 @@ const Home = () => {
                       Qualification: {doctor.qualification}
                     </Tag>
                   </HStack>
-                  <Divider my="2" />
+                  <Box height="2px" bg="gray.300" my="4" />
+
+                  {/* <Divider my="2"  borderColor="gray.100"/> */}
                   <Heading my="4" size="sm">
                     Name : {doctor.name}
                   </Heading>
-                  <Heading my="4" size="sm">
+                  <Heading my="4" size="sm" >
                     Username : {doctor.doctorName}
-                  </Heading>
-                  <Divider my="2" />
+                  </Heading >
+                  {/* <Divider my="2" /> */}
+                  <Box height="2px" bg="gray.300" my="4" />
+
                   <div className="DoctorModel">
                     <Text minH={100}>{doctor.professionalBio}</Text>
                   </div>

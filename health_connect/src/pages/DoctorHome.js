@@ -70,11 +70,15 @@ const handleBackClick = () => {
       overflow="hidden"
       p={4}
       boxShadow="md"
-      ml="5px"
+      ml="50px"
       mt="10px"
       minW="450px"
     >
-      <Image src={"https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FImage&psig=AOvVaw36P9uLTBbR8DU89pC-Bmth&ust=1704128658284000&source=images&cd=vfe&ved=0CBIQjRxqFwoTCIin-YyUuoMDFQAAAAAdAAAAABAE"} alt={"Profile"} />
+      <Image src={"https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0"} alt={"Profile"}
+      height="500px"
+      width="800px"
+      borderRadius="md"
+      />
 
       <VStack align="start" spacing={4} mt={4}>
         <Text fontSize="lg" fontWeight="bold">

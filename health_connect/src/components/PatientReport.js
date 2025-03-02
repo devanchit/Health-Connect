@@ -9,6 +9,7 @@ export const PatientReport = ({ reportuser }) => {
   const { userInfo, setUserInfo } = useContext(UserContext);
 
   const filesRef = ref(storage, `report/${reportuser}/${userInfo.username}`);
+  console.log(filesRef);
 
   useEffect(() => {
     const fetchFiles = async () => {

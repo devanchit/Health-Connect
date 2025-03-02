@@ -5,6 +5,8 @@ import { Image, Heading, Text, Box, useColorModeValue } from "@chakra-ui/react";
 import BasicUsage from "../components/ModalDialog";
 import MyModal from "../components/ModalDialog";
 import MyFormModal from "../components/Modal";
+import { getDownloadURL, listAll, ref } from "firebase/storage";
+import { storage } from "../firebase-config";
 
 export default function AdminPage() {
   const { userInfo, setUserInfo } = useContext(UserContext);
@@ -13,6 +15,9 @@ export default function AdminPage() {
   const role = userInfo.role;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [imageList,setImageList] = useState({});
+
+   
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,8 +39,38 @@ export default function AdminPage() {
         console.log("Access forbidden. Only admin can access this page.");
       }
     };
+    
+
+
+
+    const fetchImages = async () => {
+      const imagesListRef = ref(storage, `doctor/unknown`);
+      const response = await listAll(imagesListRef);
+
+      const urls = await Promise.all(
+        response.items.map((item) => getDownloadURL(item))
+      );
+
+      setImageList(urls); // Save all image URLs at once
+    };
+
+    fetchImages();
     fetchData();
-  }, [userInfo]);
+    console.log(imageList);
+    // const filesRef = ref(storage, `doctor/${formData.doctorName}/profilephoto`);
+    // const imagesListRef = ref(storage, `doctor/unknown`);
+    // listAll(imagesListRef).then((response) => {
+    //   const urls = {};
+    //   response.items.forEach((item, index) => {
+    //     getDownloadURL(item).then((url) => {
+    //       urls[index] = url; // Map URLs by index
+    //       setImageList((prev) => ({ ...prev, ...urls }));
+    //       console.log(imageList)
+    //     });
+    //   });
+    // });
+  
+  }, [userInfo,role]);
 
   //username = userInfo?.username;
 
@@ -75,7 +110,7 @@ export default function AdminPage() {
       <div className="admin">
         {username == "admin" && (
           <>
-            {doctors.map((doctor) => (
+            {doctors.map((doctor,index) => (
               <Box
                 maxW="xl"
                 borderWidth="1px"
@@ -91,7 +126,7 @@ export default function AdminPage() {
                 <Image
                   borderRadius="full"
                   boxSize="150px"
-                  src="https://via.placeholder.com/150"
+                  src={imageList[index]}
                   alt="Profile Image"
                   mx="auto"
                   mb="4"
