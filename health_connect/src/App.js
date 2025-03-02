@@ -19,6 +19,7 @@ import PatientCard from './pages/DoctorHome';
 import DoctorLoginPage from './pages/DoctorLogin';
 import { UploadedReport } from './pages/UploadedReport';
 import AdminPage from './pages/AdminPage';
+import { extendTheme } from '@chakra-ui/react';
 //import RootLayout from './RootLayout';
 
 
