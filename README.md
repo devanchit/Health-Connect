@@ -1,28 +1,28 @@
 Health Connect 🏥💬
 A web-based Health App that connects patients with doctors, allowing seamless communication, report sharing, and doctor management.
 
-🚀 Features
-✅ Patient Login/Signup – Patients can create an account and log in.
-✅ Doctor Login/Signup – Doctors can register and manage their profiles.
-✅ Admin Panel – Admins can add and manage doctors.
-✅ Chat Functionality – Patients can chat with doctors for consultations.
-✅ Report Sharing – Patients can upload and share reports with doctors.
+🚀 Features  <br>
+✅ Patient Login/Signup – Patients can create an account and log in. <br>
+✅ Doctor Login/Signup – Doctors can register and manage their profiles. <br>
+✅ Admin Panel – Admins can add and manage doctors. <br>
+✅ Chat Functionality – Patients can chat with doctors for consultations. <br>
+✅ Report Sharing – Patients can upload and share reports with doctors. <br>
 
 
-🛠️ Tech Stack
-Frontend: React.js, Chakra UI
-Backend: Node.js, Express.js
-Database: MongoDB
-Authentication: JWT (JSON Web Token)
-Real-time Chat: Firebase
-File Uploads: Firebase
+🛠️ Tech Stack <br>
+Frontend: React.js, Chakra UI <br>
+Backend: Node.js, Express.js <br>
+Database: MongoDB <br>
+Authentication: JWT (JSON Web Token) <br>
+Real-time Chat: Firebase <br>
+File Uploads: Firebase <br>
 
 
-🖥️ Usage
-Register/Login as a patient, doctor, or admin.
-Admin can add doctors through the admin panel.
-Patients can chat with doctors for consultations.
-Patients can upload medical reports and share them with doctors.
+🖥️ Usage <br>
+Register/Login as a patient, doctor, or admin. <br>
+Admin can add doctors through the admin panel. <br>
+Patients can chat with doctors for consultations. <br>
+Patients can upload medical reports and share them with doctors. <br>
 
 ## 📸 Screenshots
 
